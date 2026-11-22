@@ -1,0 +1,26 @@
+diff --git a/devices/mediatek_filogic/diy/target/linux/mediatek/dts/mt7981b-cmcc-xr30.dts b/devices/mediatek_filogic/diy/target/linux/mediatek/dts/mt7981b-cmcc-xr30.dts
+index fd94cdc..aed852c 100644
+--- a/devices/mediatek_filogic/diy/target/linux/mediatek/dts/mt7981b-cmcc-xr30.dts
++++ b/devices/mediatek_filogic/diy/target/linux/mediatek/dts/mt7981b-cmcc-xr30.dts
+@@ -84,7 +84,7 @@
+ 
+ 			partition@580000 {
+ 				label = "ubi";
+-				reg = <0x580000 0x7200000>;
++				reg = <0x580000 0xEE00000>;
+ 			};
+ 		};
+ 	};
+diff --git a/devices/mediatek_filogic/patches/01-360t7.patch b/devices/mediatek_filogic/patches/01-360t7.patch
+index 4116df7..d5fe62b 100644
+--- a/devices/mediatek_filogic/patches/01-360t7.patch
++++ b/devices/mediatek_filogic/patches/01-360t7.patch
+@@ -657,7 +657,7 @@
+ +  UBINIZE_OPTS := -E 5
+ +  BLOCKSIZE := 128k
+ +  PAGESIZE := 2048
+-+  IMAGE_SIZE := 116736k
+++  IMAGE_SIZE := 243712k
+ +  KERNEL_IN_UBI := 1
+ +  IMAGES += factory.bin
+ +  IMAGE/factory.bin := append-ubi | check-size $$$$(IMAGE_SIZE)

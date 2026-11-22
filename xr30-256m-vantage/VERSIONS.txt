@@ -1,0 +1,25 @@
+XR30 256MB Vantage build source pins
+Build completed: 2026-11-22 09:45:26 CST (Asia/Shanghai)
+Kwrt overlay: 3d2d8dab551f8e864f74291706ebf9ad96f1dd96 2026-11-20 00:44:05 +0800 update
+OpenWrt tree: 6ad88cfb335af314dc8d9827882e3b79581be873 2026-11-19 10:44:18 +0100 airoha: Fix NPU mailbox DMA direction (CVE-2026-68330)
+OpenWrt branch: openwrt-25.12
+Kwrt branch: 25.12
+Kwrt VERSION/REVISION: 11.21.2026
+
+Feeds (feeds.conf):
+src-git packages https://github.com/openwrt/packages.git;openwrt-25.12
+src-git luci https://github.com/openwrt/luci.git;openwrt-25.12
+src-git routing https://github.com/openwrt/routing.git;openwrt-25.12
+src-git video https://github.com/openwrt/video.git;openwrt-25.12
+src-git kiddin9 https://github.com/kiddin9/op-packages.git;main
+
+Feed HEAD:
+packages 70792587c1d0e22d0be73cc64b8fb1e2cd4722c9 2026-11-21 12:28:56 +0100 nginx: update to 1.30.7
+luci 92d84fc384f61a03313c137f9efd565c3cb013cc 2026-11-21 09:32:43 +0200 treewide: backport translations from master
+routing 625f9d8446807708bab4eef26cdc44692164818a 2026-11-06 18:14:51 +0100 Merge pull request #1209 from ecsv/batadv-for-25.12
+video 094bf58da6682f895255a35a84349a79dab4bf95 2025-11-27 12:18:29 +0100 mesa: bump host pip requirements tools verion for python 3.13 support
+kiddin9 cf0251186fe36855d1e8e1ef05532c81203b34f7 2026-11-21 22:11:39 +0800 🎈 Sync 2026-11-21 22:11:39
+
+Device: CMCC XR30 NAND only (not eMMC / RAX3000Z增强版)
+UBI partition: reg = <0x580000 0xEE00000>;  # 238 MiB
+IMAGE_SIZE := 243712k

@@ -1,0 +1,19 @@
+#!/bin/sh
+# Hostname and hide Kwrt author-link row (system.links=0)
+uci -q get system.@system[0] >/dev/null || uci -q add system system
+uci -q set system.@system[0].hostname='TKOS-Mr.Snail'
+uci -q set system.@system[0].links='0'
+uci -q commit system
+# Prefer lighttpd over nginx/uhttpd if more than one is present
+if [ -x /etc/init.d/lighttpd ]; then
+  [ -x /etc/init.d/nginx ] && /etc/init.d/nginx disable 2>/dev/null || true
+  [ -x /etc/init.d/uhttpd ] && /etc/init.d/uhttpd disable 2>/dev/null || true
+  /etc/init.d/lighttpd enable 2>/dev/null || true
+fi
+# Default LuCI theme: Vantage (luci-theme-vantage)
+if [ -d /www/luci-static/vantage ] || [ -d /usr/share/ucode/luci/template/themes/vantage ]; then
+  uci -q set luci.themes.Vantage='/luci-static/vantage'
+  uci -q set luci.main.mediaurlbase='/luci-static/vantage'
+  uci -q commit luci
+fi
+exit 0
