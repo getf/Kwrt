@@ -1,3 +1,11 @@
+# Kwrt
+
+CMCC RAX3000M NAND 256MB 的构建配置、设备树补丁与首次开机 overlay 在 [`rax3000m-nand-256/`](rax3000m-nand-256/README.md)。
+
+本分支在上游 Kwrt 25.12 之上只增加这些源文件。factory 与 sysupgrade 固件二进制不进入 Git。
+
+---
+
 #### 固件下载与在线定制: [openwrt.ai](https://openwrt.ai)
 
 ### openwrt 软路由固件

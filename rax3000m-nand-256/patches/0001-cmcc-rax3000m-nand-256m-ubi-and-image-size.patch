@@ -1,0 +1,94 @@
+diff --git a/devices/mediatek_filogic/diy/target/linux/mediatek/dts/mt7981b-cmcc-rax3000m-nand.dts b/devices/mediatek_filogic/diy/target/linux/mediatek/dts/mt7981b-cmcc-rax3000m-nand.dts
+index 5cc9659..f0e34e8 100644
+--- a/devices/mediatek_filogic/diy/target/linux/mediatek/dts/mt7981b-cmcc-rax3000m-nand.dts
++++ b/devices/mediatek_filogic/diy/target/linux/mediatek/dts/mt7981b-cmcc-rax3000m-nand.dts
+@@ -67,41 +67,41 @@
+ 					#size-cells = <1>;
+ 
+ 					macaddr_factory_24: macaddr@24 {
+ 						reg = <0x24 0x6>;
+ 					};
+ 
+ 					macaddr_factory_2a: macaddr@2a {
+ 						reg = <0x2a 0x6>;
+ 					};
+ 				};
+ 			};
+ 
+ 			partition@380000 {
+ 				label = "fip";
+ 				reg = <0x380000 0x200000>;
+ 				read-only;
+ 			};
+ 
+ 			partition@580000 {
+ 				label = "ubi";
+-				reg = <0x580000 0x7200000>;
++				reg = <0x580000 0xEE00000>;
+ 			};
+ 		};
+ 	};
+ };
+ 
+ &pio {
+ 	spi0_flash_pins: spi0-pins {
+ 		mux {
+ 			function = "spi";
+ 			groups = "spi0", "spi0_wp_hold";
+ 		};
+ 
+ 		conf-pu {
+ 			pins = "SPI0_CS", "SPI0_HOLD", "SPI0_WP";
+ 			drive-strength = <8>;
+ 			mediatek,pull-up-adv = <0>; /* bias-disable */
+ 		};
+ 
+ 		conf-pd {
+ 			pins = "SPI0_CLK", "SPI0_MOSI", "SPI0_MISO";
+diff --git a/devices/mediatek_filogic/patches/01-360t7.patch b/devices/mediatek_filogic/patches/01-360t7.patch
+index 4116df7..c772596 100644
+--- a/devices/mediatek_filogic/patches/01-360t7.patch
++++ b/devices/mediatek_filogic/patches/01-360t7.patch
+@@ -608,41 +608,41 @@
+ +  IMAGES += factory.bin
+ +  IMAGE/factory.bin := append-ubi | check-size $$$$(IMAGE_SIZE)
+ +  IMAGE/sysupgrade.bin := sysupgrade-tar | append-metadata
+ +  KERNEL = kernel-bin | lzma | \
+ +	fit lzma $$(KDIR)/image-$$(firstword $$(DEVICE_DTS)).dtb
+ +  KERNEL_INITRAMFS = kernel-bin | lzma | \
+ +	fit lzma $$(KDIR)/image-$$(firstword $$(DEVICE_DTS)).dtb with-initrd
+ +endef
+ +TARGET_DEVICES += imou_lc-hx3001
+ +
+ +define Device/cmcc_rax3000m-nand
+ +  DEVICE_VENDOR := CMCC
+ +  DEVICE_MODEL := RAX3000M NAND
+ +  DEVICE_DTS := mt7981b-cmcc-rax3000m-nand
+ +  DEVICE_DTS_DIR := ../dts
+ +  DEVICE_PACKAGES := kmod-mt7915e kmod-mt7981-firmware mt7981-wo-firmware kmod-usb3 \
+ +	e2fsprogs f2fsck mkf2fs
+ +  UBINIZE_OPTS := -E 5
+ +  BLOCKSIZE := 128k
+ +  PAGESIZE := 2048
+-+  IMAGE_SIZE := 116736k
+++  IMAGE_SIZE := 243712k
+ +  KERNEL_IN_UBI := 1
+ +  IMAGES += factory.bin
+ +  IMAGE/factory.bin := append-ubi | check-size $$$$(IMAGE_SIZE)
+ +  IMAGE/sysupgrade.bin := sysupgrade-tar | append-metadata
+ +endef
+ +TARGET_DEVICES += cmcc_rax3000m-nand
+ +
+ +define Device/cmcc_rax3000m-emmc
+ +  DEVICE_VENDOR := CMCC
+ +  DEVICE_MODEL := RAX3000M eMMC
+ +  DEVICE_DTS := mt7981b-cmcc-rax3000m-emmc
+ +  DEVICE_DTS_DIR := ../dts
+ +  DEVICE_PACKAGES := kmod-mt7915e kmod-mt7981-firmware mt7981-wo-firmware kmod-usb3 \
+ +	e2fsprogs f2fsck mkf2fs losetup kmod-fs-f2fs kmod-mmc
+ +  KERNEL := kernel-bin | lzma | fit lzma $$(KDIR)/image-$$(firstword $$(DEVICE_DTS)).dtb
+ +  KERNEL_INITRAMFS := kernel-bin | lzma | \
+ +	fit lzma $$(KDIR)/image-$$(firstword $$(DEVICE_DTS)).dtb with-initrd | pad-to 64k
+ +  IMAGE/sysupgrade.bin := sysupgrade-tar | append-metadata
+ +endef
+ +TARGET_DEVICES += cmcc_rax3000m-emmc

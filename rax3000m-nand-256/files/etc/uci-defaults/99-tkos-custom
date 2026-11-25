@@ -1,0 +1,24 @@
+#!/bin/sh
+# Hostname and hide Kwrt author-link row (system.links=0)
+uci -q get system.@system[0] >/dev/null || uci -q add system system
+uci -q set system.@system[0].hostname='TKOS-Mr.Snail'
+uci -q set system.@system[0].links='0'
+uci -q commit system
+# Prefer nginx; do not use lighttpd/uhttpd if they happen to be present
+if [ -x /etc/init.d/nginx ]; then
+  [ -x /etc/init.d/lighttpd ] && /etc/init.d/lighttpd disable 2>/dev/null || true
+  [ -x /etc/init.d/uhttpd ] && /etc/init.d/uhttpd disable 2>/dev/null || true
+  /etc/init.d/nginx enable 2>/dev/null || true
+fi
+# Default LuCI theme: Vantage (luci-theme-vantage)
+if [ -d /www/luci-static/vantage ] || [ -d /usr/share/ucode/luci/template/themes/vantage ]; then
+  uci -q set luci.themes.Vantage='/luci-static/vantage'
+  uci -q set luci.main.mediaurlbase='/luci-static/vantage'
+  uci -q commit luci
+fi
+# Argon is a switchable theme; default its style to Light (not follow-system/dark)
+if uci -q get argon.@global[0] >/dev/null; then
+  uci -q set argon.@global[0].mode='light'
+  uci -q commit argon
+fi
+exit 0
